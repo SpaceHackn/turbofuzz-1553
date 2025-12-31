@@ -64,11 +64,20 @@ python examples/milestone2_demo.py
 # Milestone 3: Pretty-print your packets
 python examples/milestone3_demo.py
 
+# Milestone 4: Virtual bus with BC, RT, BM devices (NO HARDWARE!)
+python examples/milestone4_demo.py
+
 # Milestone 5: Full security testing suite (BUCKLE UP!)
 python examples/milestone5_demo.py
 ```
 
-The Milestone 5 demo is the full security testing experience:
+**Milestone 4** shows complete software simulation:
+- ✓ Bus Controller (BC) - master device
+- ✓ Remote Terminal (RT) - subsystem devices
+- ✓ Bus Monitor (BM) - passive observer
+- ✓ Virtual bus - all in software, no hardware needed!
+
+**Milestone 5** is the full security testing experience:
 - ✓ 3 fuzzing strategies
 - ✓ Malformed packet generation
 - ✓ Command injection attacks
@@ -126,7 +135,7 @@ Full MIL-STD-1553B compliance:
 turbofuzz-1553/
 ├── mil1553/
 │   ├── core/          # Protocol fundamentals
-│   ├── devices/       # BC, RT, BM simulation (WIP)
+│   ├── devices/       # BC, RT, BM simulation ✅
 │   ├── parser/        # Encoding/decoding
 │   ├── security/      # Attack modules & fuzzing
 │   ├── output/        # Formatters
@@ -135,6 +144,12 @@ turbofuzz-1553/
 ├── examples/          # Runnable demos
 └── docs/              # Architecture & security guide
 ```
+
+**New in Milestone 4:** Complete virtual 1553 bus!
+- Software-based Bus Controller, Remote Terminals, and Bus Monitor
+- Simulate entire 1553 networks without hardware
+- Test attacks against simulated devices
+- Perfect for education, development, and testing
 
 ## Documentation 📚
 
