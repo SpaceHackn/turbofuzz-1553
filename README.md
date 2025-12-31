@@ -1,27 +1,27 @@
-# ✈️ Turbofuzz-1553
+# Turbofuzz-1553
 
-> *"Because your avionics bus deserves a proper stress test"*
+## MIL-STD-1553B Security Testing Framework
 
-A turbocharged security testing framework for MIL-STD-1553B (The military aircraft data bus). Think fuzzing, but with more G-forces! 🚀
+Turbofuzz-1553 is a comprehensive Python-based security testing framework for MIL-STD-1553B, the data bus protocol used in military aircraft, spacecraft, and other safety-critical avionics systems. This framework provides protocol-compliant packet generation, fuzzing capabilities, attack simulation, and vulnerability assessment tools.
 
-## What is this thing?
+## Overview
 
-Turbofuzz-1553 is a Python-based packet crafting and security testing engine for MIL-STD-1553B, the data bus standard used in military aircraft, spacecraft, and other critical systems. It lets you:
+This framework enables security researchers and aerospace engineers to:
 
-- 🎯 **Craft compliant packets** - Build proper BC-to-RT, RT-to-BC, RT-to-RT, mode commands, and broadcasts
-- 💥 **Fuzz the living daylights** - Bit-flip, boundary value, and semantic fuzzing strategies
-- 🔨 **Launch attacks** - Command injection, replay, timing violations, malformed packets
-- 🛡️ **Validate security** - Detect anomalies and attack patterns
-- 🎬 **Run scenarios** - Pre-built and custom attack scenarios
+- **Generate protocol-compliant packets** - Create BC-to-RT, RT-to-BC, RT-to-RT transfers, mode commands, and broadcast messages
+- **Perform security testing** - Implement bit-flip, boundary value, and semantic fuzzing strategies
+- **Simulate attack vectors** - Test command injection, replay attacks, timing violations, and malformed packet handling
+- **Validate implementations** - Detect anomalies, recognize attack patterns, and assess security posture
+- **Execute test scenarios** - Utilize pre-built attack scenarios or develop custom test cases
 
-All without needing actual hardware! Perfect for security researchers, aerospace engineers, or anyone who thinks "What if I send an invalid sync pattern?" is a fun Friday night.
+The framework includes a complete software-based bus simulation, enabling testing without physical hardware.
 
 ## Quick Start
 
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/turbofuzz-1553.git
+git clone https://github.com/SpaceHackn/turbofuzz-1553.git
 cd turbofuzz-1553
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -29,65 +29,63 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-### Your First Flight ✈️
+### Basic Usage Example
 
 ```python
 from mil1553.core.word import DataWord
 from mil1553.core.message import create_bc_to_rt_message
 from mil1553.security.fuzzer import Fuzzer, BitFlipFuzzer
 
-# Create a legitimate message
-msg = create_bc_to_rt_message(
+# Create a protocol-compliant message
+message = create_bc_to_rt_message(
     rt_address=5,
     subaddress=10,
     data_words=[DataWord(payload=0x1234)]
 )
 
-# Now let's get chaotic
+# Generate fuzzed test cases
 fuzzer = Fuzzer(strategy=BitFlipFuzzer(mutation_rate=0.1))
-chaos = fuzzer.generate_test_cases(msg, count=100)
+test_cases = fuzzer.generate_test_cases(message, count=100)
 
-print(f"Generated {len(chaos)} potentially catastrophic test cases!")
+print(f"Generated {len(test_cases)} test cases for security validation")
 ```
 
-## Demo Flights 🛫
+## Examples and Demonstrations
 
-Run the milestone demos to see everything in action:
+The framework includes comprehensive demonstrations of all capabilities:
 
 ```bash
-# Milestone 1: Word creation and manipulation
-python examples/milestone1_demo.py
+# Protocol implementation examples
+python examples/milestone1_demo.py  # Word creation and manipulation
+python examples/milestone2_demo.py  # Encoding/decoding pipeline
+python examples/milestone3_demo.py  # Output formatting
 
-# Milestone 2: Encoding/decoding pipeline (Manchester II baby!)
-python examples/milestone2_demo.py
+# Device simulation
+python examples/milestone4_demo.py  # Virtual bus with BC, RT, BM devices
 
-# Milestone 3: Pretty-print your packets
-python examples/milestone3_demo.py
-
-# Milestone 4: Virtual bus with BC, RT, BM devices (NO HARDWARE!)
-python examples/milestone4_demo.py
-
-# Milestone 5: Full security testing suite (BUCKLE UP!)
-python examples/milestone5_demo.py
+# Security testing
+python examples/milestone5_demo.py  # Complete security testing suite
 ```
 
-**Milestone 4** shows complete software simulation:
-- ✓ Bus Controller (BC) - master device
-- ✓ Remote Terminal (RT) - subsystem devices
-- ✓ Bus Monitor (BM) - passive observer
-- ✓ Virtual bus - all in software, no hardware needed!
+### Example Capabilities
 
-**Milestone 5** is the full security testing experience:
-- ✓ 3 fuzzing strategies
-- ✓ Malformed packet generation
-- ✓ Command injection attacks
-- ✓ Replay attacks with detection
-- ✓ Timing attacks and bus flooding
-- ✓ 245 anomalies detected across 172 test messages
+**Device Simulation (Milestone 4):**
+- Bus Controller (BC) implementation
+- Remote Terminal (RT) simulation with configurable subaddresses
+- Bus Monitor (BM) for traffic analysis
+- Virtual bus enabling hardware-independent testing
+
+**Security Testing (Milestone 5):**
+- Three fuzzing strategies (bit-flip, boundary value, semantic)
+- Malformed packet generation with protocol violations
+- Command injection attack simulation
+- Replay attack capabilities with detection mechanisms
+- Timing attack vectors including bus flooding
+- Comprehensive anomaly detection (245 anomalies across 172 test messages in demonstration)
 
 ## Features
 
-### Protocol Implementation ✅
+### Protocol Implementation
 
 Full MIL-STD-1553B compliance:
 - 20-bit word structure (3-bit sync + 16-bit data + 1-bit parity)
@@ -96,7 +94,7 @@ Full MIL-STD-1553B compliance:
 - All 5 message types
 - Timing validation (response times, inter-message gaps)
 
-### Security Testing Arsenal 🔥
+### Security Testing Capabilities
 
 **Fuzzing Engine:**
 - `BitFlipFuzzer` - Random bit corruption
@@ -120,7 +118,7 @@ Full MIL-STD-1553B compliance:
 - JSON import/export
 - Multi-scenario orchestration
 
-### Output Formats 📊
+### Output Formats
 
 - Binary (raw wire format)
 - Hex dump
@@ -135,7 +133,7 @@ Full MIL-STD-1553B compliance:
 turbofuzz-1553/
 ├── mil1553/
 │   ├── core/          # Protocol fundamentals
-│   ├── devices/       # BC, RT, BM simulation ✅
+│   ├── devices/       # BC, RT, BM simulation
 │   ├── parser/        # Encoding/decoding
 │   ├── security/      # Attack modules & fuzzing
 │   ├── output/        # Formatters
@@ -145,13 +143,13 @@ turbofuzz-1553/
 └── docs/              # Architecture & security guide
 ```
 
-**New in Milestone 4:** Complete virtual 1553 bus!
+The framework includes a complete virtual 1553 bus simulation:
 - Software-based Bus Controller, Remote Terminals, and Bus Monitor
 - Simulate entire 1553 networks without hardware
 - Test attacks against simulated devices
-- Perfect for education, development, and testing
+- Suitable for education, development, and testing
 
-## Documentation 📚
+## Documentation
 
 - [Architecture Guide](docs/architecture.md) - Complete system architecture with standard references
 - [Security Testing Guide](docs/security_testing_guide.md) - Attack methodologies and best practices
@@ -172,30 +170,27 @@ All attack vectors mapped to specific MIL-STD-1553B violations:
 - **CTF Challenges**: Create realistic aerospace security challenges
 - **Education**: Learn about safety-critical bus protocols
 
-## Warning ⚠️
+## Disclaimer
 
-This tool is for **authorized security testing only**. Don't use it on production avionics systems unless you want to explain to the FAA why the autopilot thinks it's a toaster.
+This tool is designed for **authorized security testing, research, and educational purposes only**. Use on production avionics systems or operational aircraft is prohibited without proper authorization and regulatory compliance. Users are solely responsible for ensuring appropriate use within legal and regulatory frameworks.
 
 ## Contributing
 
-Found a bug? Want to add a new attack vector? PRs welcome! Just remember:
-1. Keep it silly (aviation puns encouraged)
-2. Keep it secure (no actual malware)
-3. Keep it tested (we're not barbarians)
+Contributions are welcome. When submitting pull requests, please ensure:
+1. Code follows existing architecture and style guidelines
+2. Security testing code is for research purposes only
+3. All contributions include appropriate unit tests
+4. Documentation is updated to reflect changes
 
 ## License
 
-MIT License - Fly free! ✈️
+MIT License
 
-## Credits
+## Acknowledgments
 
-Built with ☕ and a healthy fear of edge cases.
+This framework was developed for security research and aerospace testing applications.
 
-Special thanks to:
-- The engineers who wrote MIL-STD-1553B
-- Coffee, for existing
-- That one fuzzer that found the weird bug
-
----
-
-*"In case of emergency, the nearest exit may be behind you, above you, or in a completely invalid memory address."*
+Special acknowledgment to:
+- The engineers who developed the MIL-STD-1553B standard
+- The aerospace security research community
+- Contributors to this project
